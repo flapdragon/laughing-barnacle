@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CryptoAES from 'crypto-js/aes'
 
 const Signup = () => {
   const [ firstName, setFirstName ] = useState("")
@@ -19,8 +20,11 @@ const Signup = () => {
     sessionStorage.setItem("firstName", firstName)
     sessionStorage.setItem("lastName", lastName)
     sessionStorage.setItem("email", email)
-    // TODO: encrypt password
-    sessionStorage.setItem("password", password)
+    // Encrypt password
+    // NOTES: https://stackoverflow.com/questions/49602276/how-to-encrypt-decrypt-with-crypto-js
+    // NOTES: https://www.npmjs.com/package/crypto-js#aes-encryption
+    let ciphertext = CryptoAES.encrypt(password, 'secret key 123')
+    sessionStorage.setItem("password", ciphertext)
     // TODO: Validation
     // TODO: Remove the extra fields - I have too many for a signup
     // TODO: Reset form fields

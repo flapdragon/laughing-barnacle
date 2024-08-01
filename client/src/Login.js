@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import CryptoAES from 'crypto-js/aes'
+import CryptoENC from 'crypto-js/enc-utf8'
 
 const Login = () => {
   const [ email, setEmail ] = useState("")
@@ -23,8 +25,10 @@ const Login = () => {
       // Get session data
       const sessionEmail = sessionStorage.getItem("email")
       const sessionPassword = sessionStorage.getItem("password")
+      let _ciphertext = CryptoAES.decrypt(sessionPassword.toString(), 'secret key 123')
+      // console.log(password, sessionPassword, _ciphertext.toString(CryptoENC))
       // Validate login credentials
-      if (email === sessionEmail && password === sessionPassword) {
+      if (email === sessionEmail && password === _ciphertext.toString(CryptoENC)) {
         // Set login status
         sessionStorage.setItem("authenticated", true)
         // Navigate to home
