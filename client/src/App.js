@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login'
 import Signup from './Signup'
+import PrivateRoute from './PrivateRoute'
+import Dashboard from './Dashboard'
 import './App.css'
 
 function App() {
@@ -11,6 +13,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
     </div>
   )

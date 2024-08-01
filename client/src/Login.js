@@ -30,9 +30,9 @@ const Login = () => {
       // Validate login credentials
       if (email === sessionEmail && password === _ciphertext.toString(CryptoENC)) {
         // Set login status
-        sessionStorage.setItem("authenticated", true)
-        // Navigate to home
-        navigate("/")
+        sessionStorage.setItem("authenticated", "true")
+        // Navigate to user dashboard
+        navigate("/dashboard")
       }
       else {
         // TODO: Show login error

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CryptoAES from 'crypto-js/aes'
 
 const Signup = () => {
@@ -13,6 +14,8 @@ const Signup = () => {
   const [ confirmPassword, setConfirmPassword ] = useState("")
   const [ agree, setAgree ] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
@@ -25,6 +28,10 @@ const Signup = () => {
     // NOTES: https://www.npmjs.com/package/crypto-js#aes-encryption
     let ciphertext = CryptoAES.encrypt(password, 'secret key 123')
     sessionStorage.setItem("password", ciphertext)
+    // Set authenticated to true
+    sessionStorage.setItem("authenticated", "true")
+    // Navigate to user dashboard
+    navigate("/dashboard")
     // TODO: Validation
     // TODO: Remove the extra fields - I have too many for a signup
     // TODO: Reset form fields
