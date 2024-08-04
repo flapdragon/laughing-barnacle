@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CryptoAES from 'crypto-js/aes'
+import { signup, setLoginStatus } from './authentication/authentication'
 
 const Signup = () => {
   const [ firstName, setFirstName ] = useState("")
@@ -19,19 +19,16 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
-    // Put the user info into session storage
-    sessionStorage.setItem("firstName", firstName)
-    sessionStorage.setItem("lastName", lastName)
-    sessionStorage.setItem("email", email)
-    // Encrypt password
-    // NOTES: https://stackoverflow.com/questions/49602276/how-to-encrypt-decrypt-with-crypto-js
-    // NOTES: https://www.npmjs.com/package/crypto-js#aes-encryption
-    let ciphertext = CryptoAES.encrypt(password, 'secret key 123')
-    sessionStorage.setItem("password", ciphertext)
-    // Set authenticated to true
-    sessionStorage.setItem("authenticated", "true")
+    
+    // Put the user info into storage
+    // let user = { firstName: firstName, lastName: lastName, email: email, password: password }
+    // signup(user)
+    signup({ firstName, lastName, email, password })
+
     // Navigate to user dashboard
-    navigate("/dashboard")
+    navigate("/login")
+
+    // TODO: Validation: Make sure password fields are the same
     // TODO: Validation
     // TODO: Remove the extra fields - I have too many for a signup
     // TODO: Reset form fields
