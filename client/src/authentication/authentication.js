@@ -1,13 +1,16 @@
-import CryptoAES from 'crypto-js/aes'
-import CryptoENC from 'crypto-js/enc-utf8'
+import CryptoAES from "crypto-js/aes"
+import CryptoENC from "crypto-js/enc-utf8"
+import axios from "axios"
 
-const secretKey = "secret key 123"
+// const secretKey = "secret key 123"
+const server = "http://localhost:8000"
 
 // Get login info from local storage
-export const getLogin = ({ email, password }) => {
+export const getLogin = async ({ email, password }) => {
+  const response = await axios.get(`${server}/login`, { email, password })
+  const secretKey = response.data.token
   const storagePassword = localStorage.getItem("password")
   let cipherText = CryptoAES.decrypt(storagePassword.toString(), secretKey)
-  // console.log(storagePassword, cipherText, cipherText.toString(CryptoENC), secretKey)
   return { email: localStorage.getItem("email"), password: cipherText.toString(CryptoENC) }
 }
 
@@ -25,7 +28,9 @@ export const getLoginStatus = (bool) => {
 }
 
 // Signup
-export const signup = ({ firstName, lastName, email, password }) => {
+export const signup = async ({ firstName, lastName, email, password }) => {
+  const response = await axios.get(`${server}/login`, { email, password })
+  const secretKey = response.data.token
   localStorage.setItem("firstName", firstName)
   localStorage.setItem("lastName", lastName)
   localStorage.setItem("email", email)

@@ -16,14 +16,14 @@ const Signup = () => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     console.log("handleSubmit")
     
     // Put the user info into storage
     // let user = { firstName: firstName, lastName: lastName, email: email, password: password }
     // signup(user)
-    signup({ firstName, lastName, email, password })
+    await signup({ firstName, lastName, email, password })
 
     // Navigate to user dashboard
     navigate("/login")
