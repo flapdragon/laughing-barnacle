@@ -11,9 +11,8 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("handleSubmit")
     // if email or password not filled out
     if (email.length < 3 || password.length < 3) {
       // Alert
@@ -22,7 +21,7 @@ const Login = () => {
     }
     else {
       // Get user info from storage
-      let credentials = getLogin(email, password)
+      let credentials = await getLogin(email, password)
       // Validate login credentials
       if (email === credentials.email && password === credentials.password) {
         // Set login status
