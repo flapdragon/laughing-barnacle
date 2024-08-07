@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CryptoAES from 'crypto-js/aes'
 import CryptoENC from 'crypto-js/enc-utf8'
-import { getLogin, setLoginStatus } from './authentication/authentication'
+import { checkLogin, setLoginStatus } from './authentication/authentication'
 
 const Login = () => {
   const [ email, setEmail ] = useState("")
@@ -21,11 +21,9 @@ const Login = () => {
     }
     else {
       // Get user info from storage
-      let credentials = await getLogin(email, password)
+      let loginStatus = await checkLogin(email, password)
       // Validate login credentials
-      if (email === credentials.email && password === credentials.password) {
-        // Set login status
-        setLoginStatus(true)
+      if (loginStatus) {
         // Navigate to user dashboard
         navigate("/dashboard")
       }

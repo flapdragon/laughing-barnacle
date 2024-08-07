@@ -18,15 +18,18 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("handleSubmit")
-    
     // Put the user info into storage
     // let user = { firstName: firstName, lastName: lastName, email: email, password: password }
     // signup(user)
-    await signup({ firstName, lastName, email, password })
-
-    // Navigate to user dashboard
-    navigate("/login")
+    let signedUp = await signup({ firstName, lastName, email, password })
+    // If signup successful
+    if (signedUp) {
+      // Navigate to user Login
+      navigate("/login")
+    }
+    else {
+      console.log("Signup no bueno")
+    }
 
     // TODO: Validation: Make sure password fields are the same
     // TODO: Validation
