@@ -6,7 +6,7 @@ const server = "http://localhost:8000"
 // Get login info from local storage
 export const checkLogin = async (email, password) => {
   console.log(email, password)
-  const response = await axios.post(`${server}/login`, { email, password })
+  const response = await axios.post(`${server}/users/login`, { email, password })
   const loggedIn = response.data.loggedIn
   console.log(response.data)
   if (loggedIn) {
