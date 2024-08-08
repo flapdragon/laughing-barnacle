@@ -10,7 +10,7 @@ export const checkLogin = async (email, password) => {
   const loggedIn = response.data.loggedIn
   console.log(response.data)
   if (loggedIn) {
-    // Set user storage
+    // Set frontend user storage
     setLoginStatus(true)
     // return true to login form
     return true
@@ -25,22 +25,17 @@ export const setLoginStatus = (bool) => {
 }
 
 // Get login status in local storage
-export const getLoginStatus = (bool) => {
-  // Set login status
-  return localStorage.getItem("loggedIn")
+export const getLoginStatus = async () => {
+  // Get login status from backend
+  const response = await axios.get(`${server}/check-login`, {})
+  console.log(response.data)
+  // Get login status
+  // return localStorage.getItem("loggedIn")
+  return response.data.loggedIn
 }
 
 // Signup
 export const signup = async ({ firstName, lastName, email, password }) => {
   const response = await axios.post(`${server}/signup`, { firstName, lastName, email, password })
-  // const secretKey = response.data.token
-  // localStorage.setItem("firstName", firstName)
-  // localStorage.setItem("lastName", lastName)
-  // localStorage.setItem("email", email)
-  // Encrypt password
-  // NOTES: https://stackoverflow.com/questions/49602276/how-to-encrypt-decrypt-with-crypto-js
-  // NOTES: https://www.npmjs.com/package/crypto-js#aes-encryption
-  // let cipherText = CryptoAES.encrypt(password, secretKey)
-  // localStorage.setItem("password", cipherText)
   return true
 }
