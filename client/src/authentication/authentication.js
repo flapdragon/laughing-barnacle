@@ -35,7 +35,7 @@ export const getLoginStatus = async () => {
 }
 
 // Signup
-export const signup = async ({ firstName, lastName, email, password }) => {
-  const response = await axios.post(`${server}/signup`, { firstName, lastName, email, password })
-  return true
+export const signup = async ({ username, firstName, lastName, email, password }) => {
+  const response = await axios.post(`${server}/users/create`, { username, firstName, lastName, email, password })
+  return response.data.success
 }

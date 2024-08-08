@@ -26,17 +26,6 @@ app.get("/check-login", (req, res) => {
   res.status(200).json({ "loggedIn": true })
 })
 
-app.post("/signup", (req, res) => {
-  let { firstName, lastName, email, password } = req.body
-  console.log({ firstName, lastName, email, password })
-  // TODO: Validate fields
-  // TODO: Put these credentials in database
-  if (firstName && lastName && email && password) {
-    console.log("signup valid")
-    res.status(200).json({ "message": "Signup successful", "signedUp": true })
-  }
-})
-
 app.listen(port, () => {
   console.log(`Laughing Barnacle app listening on port ${port}`)
 })
