@@ -1,11 +1,15 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { getLoginStatus } from './authentication/authentication'
 
-const PrivateRoute = () => {
+const PrivateRoute = ({ isAuth }) => {
+  console.log("PrivateRoute isAuth", isAuth)
   // Get login status
-  const authenticated = getLoginStatus()
-  if (authenticated === null || authenticated === "false") return <Navigate to="/login" />
+  if (isAuth === null || isAuth === false) {
+    return <Navigate to="/login" />
+  }
+  else if (isAuth === undefined) {
+    return <div>Loading ...</div>
+  }
   return <Outlet />
 }
 

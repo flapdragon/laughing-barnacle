@@ -4,7 +4,7 @@ import CryptoAES from 'crypto-js/aes'
 import CryptoENC from 'crypto-js/enc-utf8'
 import { checkLogin, setLoginStatus } from './authentication/authentication'
 
-const Login = () => {
+const Login = ({ setIsAuth }) => {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
   // const [ canSubmit, setCanSubmit ] = useState(false)
@@ -24,6 +24,8 @@ const Login = () => {
       let loginStatus = await checkLogin(email, password)
       // Validate login credentials
       if (loginStatus) {
+        // Set state
+        setIsAuth(true)
         // Navigate to user dashboard
         navigate("/dashboard")
       }

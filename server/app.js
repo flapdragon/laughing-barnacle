@@ -4,6 +4,7 @@ import session from "express-session"
 import { v4 as uuidv4 } from 'uuid'
 
 // TODO: Add MongoDB
+// TODO: Move routes into their own folders/code
 
 // Instantiate server
 const app = express()
@@ -17,6 +18,8 @@ app.use(session({
 }))
 const port = 8000
 
+// Hard-coded login credentials
+// TODO: Replace wtih MongoDB
 let userEmail = "test@test.com"
 let userPassword = "pass"
 let userFirstName = "test"
@@ -48,6 +51,12 @@ app.post("/login", (req, res) => {
     // Return error
     res.status(200).json({ "message": "Login not valid", "loggedIn": false  })
   }
+})
+
+app.get("/check-login", (req, res) => {
+  // TODO: Fix temp express-session code
+  console.log("check-login", req.session)
+  res.status(200).json({ "loggedIn": req.session.loggedIn })
 })
 
 app.post("/signup", (req, res) => {
