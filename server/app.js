@@ -1,78 +1,26 @@
 import express from "express"
+import mongoose from "mongoose"
 import cors from "cors"
-import session from "express-session"
 import { v4 as uuidv4 } from 'uuid'
+import usersRouter from "./users/index.js"
 
-// TODO: Add MongoDB
 // TODO: Move routes into their own folders/code
+
+// MongoDB
+const mongoURL = "mongodb://127.0.0.1:27017/laughing-barnacle"
+const mainDB = async () => {
+  await mongoose.connect(mongoURL)
+  console.log(`Connected to ${mongoURL}`)
+}
+mainDB().catch(err => console.log(err))
 
 // Instantiate server
 const app = express()
 app.use(cors())
 app.use(express.json()) // Parse request body as JSON
-// Add express session
-app.use(session({
-	secret: "Nk2JMXqH2nevAnspiWrH",
-	resave: true,
-	saveUninitialized: true
-}))
 const port = 8000
 
-// Hard-coded login credentials
-// TODO: Replace wtih MongoDB
-let userEmail = "test@test.com"
-let userPassword = "pass"
-let userFirstName = "test"
-let userLastName = "test"
-
-app.post("/login", (req, res) => {
-  // Get user login form data
-  let { email, password } = req.body
-  // If email and password exist and have values
-  if (email && password) {
-    // If email and password are correct
-    if (email === userEmail && password === userPassword) {
-      // Set express session
-      req.session.loggedIn = true
-			req.session.email = email
-      // return token
-      req.session.token = uuidv4()
-      console.log(req.session)
-      res.status(200).json({ "message": "Login successful", "loggedIn": true })
-    }
-    // If email or password credentials are incorrect
-    else {
-      // return credential error
-      res.status(200).json({ "message": "Login not successful", "loggedIn": false  })
-    }
-  }
-  // Email and password not entered
-  else {
-    // Return error
-    res.status(200).json({ "message": "Login not valid", "loggedIn": false  })
-  }
-})
-
-app.get("/check-login", (req, res) => {
-  // TODO: Fix temp express-session code
-  console.log("check-login", req.session)
-  res.status(200).json({ "loggedIn": req.session.loggedIn })
-})
-
-app.post("/signup", (req, res) => {
-  let { firstName, lastName, email, password } = req.body
-  console.log({ firstName, lastName, email, password })
-  // TODO: Validate fields
-  // TODO: Put these credentials in database
-  if (firstName && lastName && email && password) {
-    console.log("signup valid")
-    userEmail = email
-    userPassword = password
-    userFirstName = firstName
-    userLastName = lastName
-    res.status(200).json({ "message": "Signup successful", "signedUp": true})
-  }
-})
+app.use("/users", usersRouter)
 
 app.listen(port, () => {
   console.log(`Laughing Barnacle app listening on port ${port}`)
