@@ -22,10 +22,6 @@ const port = 8000
 
 app.use("/users", usersRouter)
 
-app.get("/check-login", (req, res) => {
-  res.status(200).json({ "loggedIn": true })
-})
-
 app.listen(port, () => {
   console.log(`Laughing Barnacle app listening on port ${port}`)
 })

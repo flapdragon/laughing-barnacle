@@ -7,20 +7,20 @@ const server = "http://localhost:8000"
 export const checkLogin = async (email, password) => {
   console.log(email, password)
   const response = await axios.post(`${server}/users/login`, { email, password })
-  const loggedIn = response.data.loggedIn
+  const loggedIn = response.data.auth
   console.log(response.data)
   if (loggedIn) {
     // Set frontend user storage
-    setLoginStatus(true)
+    setLoginStatus(response.data.token)
     // return true to login form
     return true
   }
 }
 
-// Set login status in local storage, either true or false, logged in or logged out
-export const setLoginStatus = (bool) => {
+// Set login info in local storage
+export const setLoginStatus = (token) => {
   // Set login status
-  localStorage.setItem("loggedIn", bool)
+  localStorage.setItem("token", token)
   return true
 }
 
@@ -31,7 +31,7 @@ export const getLoginStatus = async () => {
   console.log(response.data)
   // Get login status
   // return localStorage.getItem("loggedIn")
-  return response.data.loggedIn
+  return response.data.auth
 }
 
 // Signup

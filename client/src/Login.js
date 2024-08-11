@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import CryptoAES from 'crypto-js/aes'
-import CryptoENC from 'crypto-js/enc-utf8'
 import { checkLogin, setLoginStatus } from './authentication/authentication'
 
 const Login = ({ setIsAuth }) => {

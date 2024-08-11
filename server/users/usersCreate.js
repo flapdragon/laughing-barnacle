@@ -14,7 +14,6 @@ const usersCreate = async (req, res) => {
         username, email, password, firstName, lastName
       })
       console.log("usersCreate user", user)
-      // TODO: Add check for database response
       res.status(200).json({ "message": "Record created successful.", "success": true })
     }
     catch (err) {
